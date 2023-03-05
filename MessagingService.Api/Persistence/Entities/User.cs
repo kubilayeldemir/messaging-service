@@ -14,5 +14,9 @@ namespace MessagingService.Api.Persistence.Entities
         public string Password { get; set; }
         public string Salt { get; set; }
         public string Role { get; set; }
+        public bool CheckIfUserCredentialsCorrect(string username, string password)
+        {
+            return Username == username && Password == password;
+        }
     }
 }

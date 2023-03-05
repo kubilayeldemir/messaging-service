@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MessagingService.Api.Persistence.Contexts
 {
-    public class MessagingContext : DbContext
+    public class DataContext : DbContext
     {
-        public MessagingContext(DbContextOptions<MessagingContext> options)
+        public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
         }
 
-        public MessagingContext()
+        public DataContext()
         {
             
         }
@@ -21,7 +21,7 @@ namespace MessagingService.Api.Persistence.Contexts
         {
             modelBuilder.Entity<User>(entity => { entity.HasIndex(u => u.Username).IsUnique(); });
             modelBuilder.Entity<User>(entity => { entity.HasIndex(u => u.Email).IsUnique(); });
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MessagingContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
         }
     }
 }

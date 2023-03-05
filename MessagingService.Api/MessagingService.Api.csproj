@@ -13,13 +13,11 @@
         </PackageReference>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Repositories" />
-      <Folder Include="Services" />
-      <Folder Include="V1\RequestModels" />
-      <Folder Include="V1\ResponseModels" />
+      <Folder Include="Migrations" />
     </ItemGroup>
 
 </Project>

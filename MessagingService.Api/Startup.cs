@@ -1,5 +1,7 @@
 using System;
 using MessagingService.Api.Persistence.Contexts;
+using MessagingService.Api.Repositories;
+using MessagingService.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,8 @@ namespace MessagingService.Api
 {
     public class Startup
     {
+        public static readonly string JwtSecretKey =
+            "Z4UVcMcTqDWexjMjSEGywuRtz9WppjGkzNdC5664xzZFp9A5eVg7qrqnwaWQdJX37UDQh9mhb2nSSnRAZH3pH4vn"; //TODO get from env
         private static readonly string DbConnString = "Username=postgres;Password=1997;Server=localhost;Port=5432;Database=message;Trust Server Certificate=true;";
         //TODO use dockerized pg 
         public Startup(IConfiguration configuration)
@@ -27,7 +31,10 @@ namespace MessagingService.Api
             services.AddControllers();
             services.AddRouting(opt => opt.LowercaseUrls = true);
             
-            services.AddDbContext<MessagingContext>(options => options.UseNpgsql(DbConnString));
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(DbConnString));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MessagingService.Api", Version = "v1"});
@@ -45,7 +52,7 @@ namespace MessagingService.Api
             }
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<MessagingContext>();
+                var context = serviceScope.ServiceProvider.GetService<DataContext>();
                 context.Database.Migrate();
             }
 
