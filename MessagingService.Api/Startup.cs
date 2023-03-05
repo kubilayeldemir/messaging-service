@@ -39,7 +39,9 @@ namespace MessagingService.Api
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(DbConnString));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddAuthentication(x =>
                 {

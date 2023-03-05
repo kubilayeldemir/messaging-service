@@ -16,7 +16,8 @@ namespace MessagingService.Api.Persistence.Contexts
         }
         
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<Message> Messages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity => { entity.HasIndex(u => u.Username).IsUnique(); });
