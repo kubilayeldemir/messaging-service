@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MessagingService.Api.Persistence.Entities;
 using MessagingService.Api.Repositories;
 using MessagingService.Api.V1.RequestModels;
+using MessagingService.Api.V1.ResponseModels;
 
 namespace MessagingService.Api.Services
 {
@@ -33,6 +36,28 @@ namespace MessagingService.Api.Services
                 SenderUserId = senderId,
                 ReceiverUserId = receiverUser.Id
             });
+        }
+
+        public async Task<List<MessageResponse>> GetMessageHistory(string username, long userId, string partnerUsername)
+        {
+            var partnerUser = await _userRepository.GetUserByUsername(partnerUsername);
+            if (partnerUser == null)
+            {
+                throw new Exception("Partner not found");
+            }
+            
+            var messages =  await _messageRepository.GetMessageHistory(userId, partnerUser.Id);
+            return messages.ConvertAll(x => new MessageResponse
+            {
+                Content = x.Content,
+                Id = x.Id,
+                ReceiverUserId = x.ReceiverUserId,
+                SenderUserId = x.SenderUserId,
+                ReceiverUsername = x.ReceiverUserId == userId ? username : partnerUsername,
+                SenderUsername = x.SenderUserId == userId ? username : partnerUsername,
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt
+            }).ToList();
         }
     }
 }

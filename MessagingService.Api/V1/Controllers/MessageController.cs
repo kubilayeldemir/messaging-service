@@ -30,5 +30,19 @@ namespace MessagingService.Api.V1.Controllers
             await _messageService.SendMessageToUser(long.Parse(userId), model);
             return Ok();
         }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetMessageHistory([FromQuery] string partnerUsername)
+        {
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "id")?.Value;
+            var username = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "username")?.Value;
+            if (userId == null || username == null)
+            {
+                return Unauthorized();
+            }
+            var messages = await _messageService.GetMessageHistory(username, long.Parse(userId), partnerUsername);
+            return Ok(messages);
+        }
     }
 }
