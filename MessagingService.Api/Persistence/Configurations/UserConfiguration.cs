@@ -8,13 +8,6 @@ namespace MessagingService.Api.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(u => u.Email)
-                .HasMaxLength(320)
-                .IsRequired();
-
-            builder.Property(p => p.Email)
-                .HasMaxLength(330);
-
             builder.Property(u => u.Username)
                 .HasMaxLength(32)
                 .IsRequired();

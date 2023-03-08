@@ -8,6 +8,6 @@ namespace MessagingService.Api.Services
     public interface IMessageService
     {
         Task SendMessageToUser(long senderId, SendMessageRequest request);
-        Task<List<MessageResponse>> GetMessageHistory(string username, long userId, string partnerUsername);
+        Task<List<MessageResponse>> GetMessageHistoryWithPartner(string username, long userId, string partnerUsername);
     }
 }

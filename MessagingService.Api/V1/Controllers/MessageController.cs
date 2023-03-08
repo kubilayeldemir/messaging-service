@@ -9,7 +9,7 @@ namespace MessagingService.Api.V1.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class MessageController  : ControllerBase
+    public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
 
@@ -17,7 +17,7 @@ namespace MessagingService.Api.V1.Controllers
         {
             _messageService = messageService;
         }
-        
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> SendMessageToUser([FromBody] SendMessageRequest model)
@@ -27,10 +27,11 @@ namespace MessagingService.Api.V1.Controllers
             {
                 return Unauthorized();
             }
+
             await _messageService.SendMessageToUser(long.Parse(userId), model);
             return Ok();
         }
-        
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetMessageHistory([FromQuery] string partnerUsername)
@@ -41,7 +42,9 @@ namespace MessagingService.Api.V1.Controllers
             {
                 return Unauthorized();
             }
-            var messages = await _messageService.GetMessageHistory(username, long.Parse(userId), partnerUsername);
+
+            var messages =
+                await _messageService.GetMessageHistoryWithPartner(username, long.Parse(userId), partnerUsername);
             return Ok(messages);
         }
     }

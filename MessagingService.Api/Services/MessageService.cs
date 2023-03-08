@@ -19,7 +19,7 @@ namespace MessagingService.Api.Services
             _messageRepository = messageRepository;
             _userRepository = userRepository;
         }
-        
+
         public async Task SendMessageToUser(long senderId, SendMessageRequest request)
         {
             var receiverUser = await _userRepository.GetUserByUsername(request.ReceiverUsername);
@@ -27,7 +27,7 @@ namespace MessagingService.Api.Services
             {
                 throw new Exception("User not found");
             }
-            
+
             await _messageRepository.CreateMessage(new Message
             {
                 Content = request.Content,
@@ -38,15 +38,15 @@ namespace MessagingService.Api.Services
             });
         }
 
-        public async Task<List<MessageResponse>> GetMessageHistory(string username, long userId, string partnerUsername)
+        public async Task<List<MessageResponse>> GetMessageHistoryWithPartner(string username, long userId, string partnerUsername)
         {
             var partnerUser = await _userRepository.GetUserByUsername(partnerUsername);
             if (partnerUser == null)
             {
                 throw new Exception("Partner not found");
             }
-            
-            var messages =  await _messageRepository.GetMessageHistory(userId, partnerUser.Id);
+
+            var messages = await _messageRepository.GetMessageHistory(userId, partnerUser.Id);
             return messages.ConvertAll(x => new MessageResponse
             {
                 Content = x.Content,
