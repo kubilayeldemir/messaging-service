@@ -41,7 +41,6 @@ namespace MessagingService.Api.Services
             var user = new User
             {
                 Username = userRegisterModel.Username,
-                Email = userRegisterModel.Email.ToLower(),
                 Password = hashedData,
                 Salt = salt,
                 Role = "user",

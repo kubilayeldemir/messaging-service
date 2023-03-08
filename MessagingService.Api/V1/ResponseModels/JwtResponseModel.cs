@@ -9,8 +9,8 @@ namespace MessagingService.Api.V1.ResponseModels
 
         public JwtResponseModel(User user, string jwt)
         {
-            User = new UserResponseModel(user.Username, user.Email, user.Role);
-            Jwt = jwt;
+            User = new UserResponseModel(user.Username, user.Role);
+            Jwt = "Bearer " + jwt;
         }
     }
 }

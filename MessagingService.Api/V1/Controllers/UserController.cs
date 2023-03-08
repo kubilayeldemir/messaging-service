@@ -41,7 +41,7 @@ namespace MessagingService.Api.V1.Controllers
                     Code = 400001
                 });
             }
-            return Ok(new UserResponseModel(user.Username, user.Email, user.Role));
+            return Ok(new UserResponseModel(user.Username, user.Role));
         }
     }
 }

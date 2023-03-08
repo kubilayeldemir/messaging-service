@@ -19,7 +19,6 @@ namespace MessagingService.Api.Helpers
                     new[]
                     {
                         new Claim("id", user.Id.ToString()),
-                        new Claim("email", user.Email),
                         new Claim("username", user.Username),
                         new Claim("role", string.IsNullOrEmpty(user.Role) ? "user" : user.Role),
                     }),
