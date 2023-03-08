@@ -34,7 +34,7 @@ namespace MessagingService.Api.V1.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetMessageHistory([FromQuery] string partnerUsername)
+        public async Task<IActionResult> GetMessageHistory([FromQuery] GetMessageHistoryRequestModel model)
         {
             var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "id")?.Value;
             var username = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "username")?.Value;
@@ -44,7 +44,7 @@ namespace MessagingService.Api.V1.Controllers
             }
 
             var messages =
-                await _messageService.GetMessageHistoryWithPartner(username, long.Parse(userId), partnerUsername);
+                await _messageService.GetMessageHistoryWithPartner(username, long.Parse(userId), model.PartnerUsername);
             return Ok(messages);
         }
     }

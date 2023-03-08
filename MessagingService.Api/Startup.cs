@@ -1,8 +1,12 @@
 using System;
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MessagingService.Api.Helpers;
 using MessagingService.Api.Persistence.Contexts;
 using MessagingService.Api.Repositories;
 using MessagingService.Api.Services;
+using MessagingService.Api.V1.Validations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,7 +49,10 @@ namespace MessagingService.Api
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMessageService, MessageService>();
-
+            
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<UserLoginRequestModelValidation>();
+            
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
