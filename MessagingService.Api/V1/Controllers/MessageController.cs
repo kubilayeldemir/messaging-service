@@ -28,7 +28,11 @@ namespace MessagingService.Api.V1.Controllers
                 return Unauthorized();
             }
 
-            await _messageService.SendMessageToUser(long.Parse(userId), model);
+            var isUserFound = await _messageService.SendMessageToUser(long.Parse(userId), model);
+            if (!isUserFound)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 
@@ -45,6 +49,10 @@ namespace MessagingService.Api.V1.Controllers
 
             var messages =
                 await _messageService.GetMessageHistoryWithPartner(username, long.Parse(userId), model.PartnerUsername);
+            if (messages == null)
+            {
+                return NotFound();
+            }
             return Ok(messages);
         }
     }
