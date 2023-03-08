@@ -17,13 +17,16 @@ namespace MessagingService.Api
 {
     public class Startup
     {
-        public static readonly string JwtSecretKey =
-            "Z4UVcMcTqDWexjMjSEGywuRtz9WppjGkzNdC5664xzZFp9A5eVg7qrqnwaWQdJX37UDQh9mhb2nSSnRAZH3pH4vn"; //TODO get from env
+        public static readonly string JwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
 
         private static readonly string DbConnString =
-            "Username=postgres;Password=1997;Server=localhost;Port=5432;Database=message;Trust Server Certificate=true;";
+            $"Username={Environment.GetEnvironmentVariable("DB_USERNAME")};" +
+            $"Password={Environment.GetEnvironmentVariable("DB_PW")};" +
+            $"Server={Environment.GetEnvironmentVariable("DB_HOST")};" +
+            $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
+            $"Database={Environment.GetEnvironmentVariable("DB_DBNAME")};" +
+            $"Trust Server Certificate=true;";
 
-        //TODO use dockerized pg 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -109,7 +112,7 @@ namespace MessagingService.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -1,0 +1,23 @@
+﻿version: "3.4"
+services:
+  messaging-api:
+    build:
+      context: .
+      dockerfile: MessagingService.Api/Dockerfile
+    environment:
+      JWT_SECRET: "Z4UVcMcTqDWexjMjSEGywuRtz9WppjGkzNdC5664xzZFp9A5eVg7qrqnwaWQdJX37UDQh9mhb2nSSnRAZH3pH4vn"
+      DB_HOST: "postgresql_db"
+      DB_USERNAME: "postgres"
+      DB_PW: "postgres"
+      DB_PORT: "5432"
+      DB_DBNAME: "postgres"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgresql_db
+  postgresql_db:
+    image: "postgres"
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
