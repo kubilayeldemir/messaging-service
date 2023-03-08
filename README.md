@@ -1,6 +1,7 @@
 ﻿To Run:
 ```
-docker-compose up -d
+cd messaging-service
+docker-compose up
 ```
 
 Swagger at:
