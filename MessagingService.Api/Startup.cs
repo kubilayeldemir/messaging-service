@@ -49,10 +49,10 @@ namespace MessagingService.Api
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMessageService, MessageService>();
-            
+
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<UserLoginRequestModelValidation>();
-            
+
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -122,7 +122,7 @@ namespace MessagingService.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
