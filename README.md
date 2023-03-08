@@ -5,4 +5,4 @@ docker-compose up
 ```
 
 Swagger at:
-http://localhost:5000/swagger/index.html
+http://localhost:8080/swagger/index.html
